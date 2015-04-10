@@ -2,7 +2,11 @@ package com.twitter;
 
 import java.util.LinkedList;
 import com.twitter.poruke.TwitterPoruka;
-
+/**
+ * Ova klasa predstavlja Twitter
+ * @author Andrej
+ *
+ */
 public class Twitter {
 	/**
 	 * Lista twitter poruka
@@ -34,6 +38,7 @@ public class Twitter {
 	 * @param maxBroj - kapacitet niza 
 	 * @param tag - tekst koji treba da sadrzi trazena poruka
 	 * @return vraca niz twitter poruka zadatog kapaciteta, u kojem svaki clan niza sadrzi odredjeni trazeni tekst
+	 * @throws java.lang.RuntimeException u slucaju kada uneti tag nije validan
 	 */
 	public TwitterPoruka[] vratiPoruke(int maxBroj, String tag) {
 		if (tag==null || tag.isEmpty())
