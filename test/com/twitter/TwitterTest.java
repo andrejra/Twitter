@@ -59,15 +59,61 @@ public class TwitterTest {
 	}
 
 	/**
+	 * Test method for {@link com.twitter.Twitter#unesi(java.lang.String, java.lang.String)}.
+	 */
+	@Test
+	public void testUnesiDve() {
+		tw.unesi("Zoran", "Sumadinac");
+		tw.unesi("Cara", "Mimi");
+		TwitterPoruka por1=new TwitterPoruka();
+		TwitterPoruka por2=new TwitterPoruka();
+		por1.setKorisnik("Zoran");
+		por1.setPoruka("Sumadinac");
+		por2.setKorisnik("Cara");
+		por2.setPoruka("Mimi");
+		assertEquals(por1.toString(), tw.vratiSvePoruke().get(tw.vratiSvePoruke().size()-2).toString());
+		assertEquals(por2.toString(), tw.vratiSvePoruke().get(tw.vratiSvePoruke().size()-1).toString());
+	}
+	
+	/**
 	 * Test method for {@link com.twitter.Twitter#vratiPoruke(int, java.lang.String)}.
 	 */
 	@Test
 	public void testVratiPoruke() {
-		tw.unesi("Ime1", "poruka1");
-		tw.unesi("Ime2", "poruka2");
-		tw.unesi("Ime3", "poruka3");
-		tw.unesi("Ime4", "poruka4");
-		tw.vratiPoruke(1, "poruka2");
+		tw.unesi("Zoran Sumadinac", "Ja sam najbolji pevac");
+		tw.unesi("Cara Mimi", "Ja sam najgori pevac");
+		tw.unesi("Petar Petrovic", "Ja nisam pevac");
+		TwitterPoruka[] test = tw.vratiPoruke(6,"pevac");
+		assertEquals(6 , test.length);
+		assertEquals("Ja sam najbolji pevac", test[0].getPoruka());
+		assertEquals("Zoran Sumadinac", test[0].getKorisnik());
+		assertEquals("Ja sam najgori pevac", test[1].getPoruka() );
+		assertEquals("Cara Mimi", test[1].getKorisnik());
+		assertEquals(null, test[5]);
 	}
 
+	/**
+	 * Test method for {@link com.twitter.Twitter#vratiPoruke(int, java.lang.String)}.
+	 */
+	@Test (expected=java.lang.RuntimeException.class)
+	public void testVratiPorukeNull() {		
+		tw.unesi(null, null);
+		tw.vratiPoruke(1, null);
+	}
+	/**
+	 * Test method for {@link com.twitter.Twitter#vratiPoruke(int, java.lang.String)}.
+	 */
+	@Test (expected=java.lang.RuntimeException.class)
+	public void testVratiPorukePrazanString() {		
+		tw.unesi("", "");
+		tw.vratiPoruke(1, "");
+	}
+	/**
+	 * Test method for {@link com.twitter.Twitter#vratiPoruke(int, java.lang.String)}.
+	 */
+	@Test 
+	public void testVratiPorukeNevalidanMaxBr() {
+		TwitterPoruka [] niz = tw.vratiPoruke(-1, "trazeni pojam");
+		assertEquals(100,niz.length);
+	}
 }
