@@ -43,12 +43,47 @@ public class TwitterPorukaTest {
 	/**
 	 * Test method for {@link com.twitter.poruke.TwitterPoruka#setPoruka(java.lang.String)}.
 	 */
+	@Test (expected = java.lang.RuntimeException.class)
+	public void testSetKorisnikNull() {
+		twp.setKorisnik(null);
+	}
+	/**
+	 * Test method for {@link com.twitter.poruke.TwitterPoruka#setKorisnik(java.lang.String)}.
+	 */
+	@Test (expected = java.lang.RuntimeException.class)
+	public void testSetKorisnikPrazanString() {
+		twp.setKorisnik("");
+	}
+	
+	/**
+	 * Test method for {@link com.twitter.poruke.TwitterPoruka#setPoruka(java.lang.String)}.
+	 */
 	@Test
 	public void testSetPoruka() {
 		twp.setPoruka("Hello world");
 		assertEquals("Hello world",twp.getPoruka());
 	}
 
+	/**
+	 * Test method for {@link com.twitter.poruke.TwitterPoruka#setPoruka(java.lang.String)}.
+	 */
+	@Test (expected = java.lang.RuntimeException.class)
+	public void testSetPorukaNull() {
+		twp.setPoruka(null);
+	}
+	/**
+	 * Test method for {@link com.twitter.poruke.TwitterPoruka#setPoruka(java.lang.String)}.
+	 */
+	@Test (expected = java.lang.RuntimeException.class)
+	public void testSetPoruka140Karaktera() {
+		String por="Vise od 140 karaktera.";
+		for (int i = 0; i < 7; i++) {
+			por= por + "Jos vise od 140 karaktera. ";
+		}
+		twp.setPoruka(por);
+		assertEquals(por, twp.getPoruka());
+	}
+	
 	/**
 	 * Test method for {@link com.twitter.poruke.TwitterPoruka#toString()}.
 	 */
